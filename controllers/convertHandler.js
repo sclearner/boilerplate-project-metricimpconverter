@@ -1,41 +1,42 @@
 function ConvertHandler() {
+  const convert = {
+    'mi': "km",
+    'gal': "L",
+    'lbs': "kg",
+    'kg': "lbs",
+    'L': "gal",
+    'km': "mi",
+  };
+
   this.getNum = function (input) {
-    let result;
-    let numberPath = input.match(/^.*(?=[a-z].+$)/i);
-    if (numberPath === null) return null;
-    numberPath = numberPath[0]
-    if (numberPath.search('/') + 1) {
-      numberPath = numberPath.split('/')
-      if (numberPath.length != 2) return null;
-      result = numberPath[0] / numberPath[1]
-    }
-    else {
-      result = Number(numberPath)
-      if (isNaN(result)) result = null
+    let result = 1;
+    let unit = input.match(/[a-zA-Z].*$/i);
+    let number = input;
+    if (unit !== null) number = input.replace(unit[0],'')
+    // Fraction
+    if (number.length) {
+      number = number.split('/').map(e => Number(e))
+      if (number.length == 1) [result] = number;
+      else if (number.length == 2) result = number[0] / number[1]
+      else result = null
     }
     return result;
   };
 
   this.getUnit = function (input) {
-    let result;
-    result = input.match(/[a-z].+$/i);
-    result = result instanceof Array ? result[0].toLowerCase() : null;
-    if (result === "l") result = "L";
+    let result = null;
+    let unit = input.match(/[a-zA-Z].*$/i);
+    if (unit !== null) {
+      result = unit[0].toLowerCase()
+      if (result === "l") result = "L";
+      if (!Object.keys(convert).includes(result)) result = null; 
+    }
     return result;
   };
 
   this.getReturnUnit = function (initUnit) {
     let result;
-    const convert = {
-      'mi': "km",
-      'gal': "L",
-      'lbs': "kg",
-      'kg': "lbs",
-      'L': "gal",
-      'km': "mi",
-    };
-    if (Object.keys(convert).find(value => value = initUnit)) result = convert[initUnit];
-    else result = null;
+    result = convert[initUnit];
     return result;
   };
 
