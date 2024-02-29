@@ -77,4 +77,34 @@ suite("Unit Tests", function () {
         assert.equal(convertHandler.spellOutUnit(unit), dictionary[unit]);
         }  
    });
+
+   // #11
+  test("gal to L", () => {
+    assert.equal(convertHandler.convert(1, 'gal'), 3.78541) 
+   });
+
+   // #12
+  test("L to gal", () => {
+    assert.equal(convertHandler.convert(1, 'L'), 0.26417);
+   });
+
+   // #13
+  test("mi to km", () => {
+    assert.equal(convertHandler.convert(1, 'mi'), 1.60934) 
+   });
+
+   // #14
+  test("km to mi", () => {
+    assert.equal(convertHandler.convert(1, 'km'), 0.62137)
+   });
+
+   // #15
+  test("lbs to kg", () => {
+    assert.equal(convertHandler.convert(1, 'lbs'), 0.45359)
+   });
+
+   // #16
+  test("kg to lbs", () => {
+    assert.equal(convertHandler.convert(1, 'kg'), 2.20462)
+   });
 });

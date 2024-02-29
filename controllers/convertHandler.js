@@ -67,7 +67,7 @@ function ConvertHandler() {
       L: (x) => x / galToL,
       km: (x) => x / miToKm,
     };
-    result = convert[initUnit](initNum)
+    result = Math.round(convert[initUnit](initNum) * 100000) / 100000
     return result;
   };
 
